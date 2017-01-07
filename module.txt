@@ -1,0 +1,11 @@
+{
+    "id" : "Underworld",
+    "version" : "0.1.0",
+    "author" : "Max Borsch",
+    "displayName" : "Underworld",
+    "description" : "Adds a fiery dimension you probably shouldn't go to!",
+    "dependencies" : [
+        {"id": "Core", "minVersion": "1.3.1-SNAPSHOT"}
+    ],
+    "serverSideOnly" : false
+}
