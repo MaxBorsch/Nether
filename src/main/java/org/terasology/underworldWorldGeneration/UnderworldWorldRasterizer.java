@@ -23,29 +23,37 @@ import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
 import org.terasology.world.generation.WorldRasterizer;
+import org.terasology.world.generation.facets.SeaLevelFacet;
 import org.terasology.world.generation.facets.SurfaceHeightFacet;
 
 public class UnderworldWorldRasterizer implements WorldRasterizer {
 
     private Block ground;
+    private Block lava;
 
     @Override
     public void initialize() {
         ground = CoreRegistry.get(BlockManager.class).getBlock("Underworld:Basalt");
+        lava = CoreRegistry.get(BlockManager.class).getBlock("Core:Lava");
     }
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
         SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
+        SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
+
         for (Vector3i position : chunkRegion.getRegion()) {
             float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
             float ceilingHeight = 25f - surfaceHeight;
 
-            if (position.y <= surfaceHeight) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
+            if (position.y <= seaLevelFacet.getSeaLevel() && position.y >= surfaceHeight) {
+                chunk.setBlock(ChunkMath.calcBlockPos(position), lava);
+
+            } else if (position.y <= surfaceHeight) {
+                    chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
 
             } else if (position.y >= ceilingHeight) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
+                    chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
             }
         }
     }

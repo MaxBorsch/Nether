@@ -5,7 +5,8 @@
     "displayName" : "Underworld",
     "description" : "Adds a fiery dimension you probably shouldn't go to!",
     "dependencies" : [
-        {"id": "Core", "minVersion": "1.3.1-SNAPSHOT"}
+        {"id": "Core", "minVersion": "1.3.1-SNAPSHOT"},
+        {"id": "WorldPortals", "minVersion": "0.1.0"}
     ],
     "serverSideOnly" : false
 }

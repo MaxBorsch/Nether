@@ -1,0 +1,8 @@
+{
+    "luminance": 15,
+    "hardness": 0,
+    "attachmentAllowed": false,
+    "translucent": true,
+    "penetrable": true,
+    "shadowCasting": false
+}

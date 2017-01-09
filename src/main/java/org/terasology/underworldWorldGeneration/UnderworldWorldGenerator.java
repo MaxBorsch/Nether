@@ -35,7 +35,7 @@ public class UnderworldWorldGenerator extends BaseFacetedWorldGenerator {
 
     @Override
     protected WorldBuilder createWorld() {
-        int seaLevel = -4;
+        int seaLevel = -3;
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(seaLevel)
