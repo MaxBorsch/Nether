@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 MovingBlocks
+ * Copyright 2015 MovingBlocks
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.underworldWorldGeneration.portal;
+package org.terasology.underworldWorldGeneration;
 
-import org.terasology.math.geom.Vector3f;
-import org.terasology.math.geom.Vector3i;
+import org.terasology.world.generation.FacetProviderPlugin;
+import org.terasology.world.generation.GeneratingRegion;
+import org.terasology.world.generation.Produces;
 import org.terasology.world.generator.plugin.RegisterPlugin;
-import org.terasology.worldportals.world.PortalRasterizer;
-
 
 @RegisterPlugin
-public class UnderworldPortalRasterizer extends PortalRasterizer {
+@Produces(UnderworldDepthFacet.class)
+public class UnderworldDepthProvider implements FacetProviderPlugin {
 
-    public UnderworldPortalRasterizer () {
-        super("Underworld:Basalt", "Underworld:Portal");
+    private int depth = -257;
+
+    public UnderworldDepthProvider (int depth) {
+        this.depth = depth;
     }
 
+    public UnderworldDepthProvider () {}
+
     @Override
-    public Vector3f getDestination(Vector3i portalPosition) {
-        return portalPosition.toVector3f().setY(-256 - 25);
+    public void process(GeneratingRegion region) {
+        region.setRegionFacet(UnderworldDepthFacet.class, new UnderworldDepthFacet(depth));
     }
 }

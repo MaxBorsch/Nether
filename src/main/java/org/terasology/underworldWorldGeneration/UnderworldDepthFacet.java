@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.terasology.underworldWorldGeneration.portal;
+package org.terasology.underworldWorldGeneration;
 
-import org.terasology.math.geom.Vector3f;
-import org.terasology.math.geom.Vector3i;
-import org.terasology.world.generator.plugin.RegisterPlugin;
-import org.terasology.worldportals.world.PortalRasterizer;
+import org.terasology.world.generation.WorldFacet;
 
+/**
+ */
+public class UnderworldDepthFacet implements WorldFacet {
+    private int depth = -257;
 
-@RegisterPlugin
-public class UnderworldPortalRasterizer extends PortalRasterizer {
-
-    public UnderworldPortalRasterizer () {
-        super("Underworld:Basalt", "Underworld:Portal");
+    public UnderworldDepthFacet (int depth) {
+        this.depth = depth;
     }
 
-    @Override
-    public Vector3f getDestination(Vector3i portalPosition) {
-        return portalPosition.toVector3f().setY(-256 - 25);
+    public int getDepth () {
+        return depth;
     }
 }

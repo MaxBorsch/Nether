@@ -16,20 +16,25 @@
 package org.terasology.underworldWorldGeneration;
 
 import org.terasology.entitySystem.Component;
-import org.terasology.math.geom.Rect2i;
 import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
+import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
 import org.terasology.rendering.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.PerlinNoise;
 import org.terasology.utilities.procedural.SubSampledNoise;
-import org.terasology.world.generation.*;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.ConfigurableFacetProvider;
+import org.terasology.world.generation.Facet;
+import org.terasology.world.generation.FacetProviderPlugin;
+import org.terasology.world.generation.GeneratingRegion;
+import org.terasology.world.generation.Updates;
+import org.terasology.world.generator.plugin.RegisterPlugin;
 
-@Updates(@Facet(SurfaceHeightFacet.class))
-public class MountainsProvider implements ConfigurableFacetProvider {
+@RegisterPlugin
+@Updates(@Facet(UnderworldHeightFacet.class))
+public class MountainsProvider implements FacetProviderPlugin, ConfigurableFacetProvider {
 
     private Noise mountainNoise;
 
@@ -43,7 +48,7 @@ public class MountainsProvider implements ConfigurableFacetProvider {
 
     @Override
     public void process(GeneratingRegion region) {
-        SurfaceHeightFacet facet = region.getRegionFacet(SurfaceHeightFacet.class);
+        UnderworldHeightFacet facet = region.getRegionFacet(UnderworldHeightFacet.class);
         float mountainHeight = configuration.mountainHeight;
         // loop through every position on our 2d array
         Rect2i processRegion = facet.getWorldRegion();
@@ -77,7 +82,7 @@ public class MountainsProvider implements ConfigurableFacetProvider {
 
     private static class MountainsConfiguration implements Component
     {
-        @Range(min = 100, max = 200f, increment = 25f, precision = 1, description = "Mountain Height")
+        @Range(min = 100, max = 200f, increment = 25f, precision = 1, description = "Underworld Mountain Height")
         private float mountainHeight = 150f;
     }
 }

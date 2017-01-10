@@ -15,6 +15,7 @@
  */
 package org.terasology.underworldWorldGeneration;
 
+import org.terasology.core.world.generator.facetProviders.FlatSurfaceHeightProvider;
 import org.terasology.core.world.generator.facetProviders.SeaLevelProvider;
 import org.terasology.engine.SimpleUri;
 import org.terasology.registry.In;
@@ -39,7 +40,9 @@ public class UnderworldWorldGenerator extends BaseFacetedWorldGenerator {
 
         return new WorldBuilder(worldGeneratorPluginLibrary)
                 .setSeaLevel(seaLevel)
-                .addProvider(new SurfaceProvider())
+                .addProvider(new UnderworldDepthProvider(0))
+                .addProvider(new UnderworldSurfaceProvider())
+                .addProvider(new FlatSurfaceHeightProvider(0))
                 .addProvider(new SeaLevelProvider(seaLevel))
                 .addProvider(new MountainsProvider())
                 .addProvider(new ConstantHumidityProvider(0.1f))

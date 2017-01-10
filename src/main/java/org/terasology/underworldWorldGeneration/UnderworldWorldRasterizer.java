@@ -22,11 +22,11 @@ import org.terasology.world.block.Block;
 import org.terasology.world.block.BlockManager;
 import org.terasology.world.chunks.CoreChunk;
 import org.terasology.world.generation.Region;
-import org.terasology.world.generation.WorldRasterizer;
-import org.terasology.world.generation.facets.SeaLevelFacet;
-import org.terasology.world.generation.facets.SurfaceHeightFacet;
+import org.terasology.world.generation.WorldRasterizerPlugin;
+import org.terasology.world.generator.plugin.RegisterPlugin;
 
-public class UnderworldWorldRasterizer implements WorldRasterizer {
+@RegisterPlugin
+public class UnderworldWorldRasterizer implements WorldRasterizerPlugin {
 
     private Block ground;
     private Block lava;
@@ -39,21 +39,23 @@ public class UnderworldWorldRasterizer implements WorldRasterizer {
 
     @Override
     public void generateChunk(CoreChunk chunk, Region chunkRegion) {
-        SurfaceHeightFacet surfaceHeightFacet = chunkRegion.getFacet(SurfaceHeightFacet.class);
-        SeaLevelFacet seaLevelFacet = chunkRegion.getFacet(SeaLevelFacet.class);
+        UnderworldHeightFacet surfaceHeightFacet = chunkRegion.getFacet(UnderworldHeightFacet.class);
+        UnderworldDepthFacet depthFacet = chunkRegion.getFacet(UnderworldDepthFacet.class);
 
         for (Vector3i position : chunkRegion.getRegion()) {
-            float surfaceHeight = surfaceHeightFacet.getWorld(position.x, position.z);
-            float ceilingHeight = 25f - surfaceHeight;
+            if (position.y > depthFacet.getDepth()) {
+                continue;
+            }
 
-            if (position.y <= seaLevelFacet.getSeaLevel() && position.y >= surfaceHeight) {
+            float surfaceOffset = surfaceHeightFacet.getWorld(position.x, position.z);
+            float ceilingHeight = depthFacet.getDepth();
+            float centerHeight = ceilingHeight - 25;
+
+            if (Math.abs(centerHeight - position.y) >= surfaceOffset) {
+                chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
+
+            } else if (position.y <= centerHeight - 15) {
                 chunk.setBlock(ChunkMath.calcBlockPos(position), lava);
-
-            } else if (position.y <= surfaceHeight) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
-
-            } else if (position.y >= ceilingHeight) {
-                    chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
             }
         }
     }
