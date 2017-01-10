@@ -1,7 +1,4 @@
 {
     "basedOn": "core:rock2",
-    "hardness": 4,
-    "translucent": true,
-    "luminance": 15,
-    "shadowCasting": false
+    "hardness": 6
 }

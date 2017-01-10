@@ -57,7 +57,7 @@ public class UnderworldPortalProvider implements FacetProviderPlugin {
             float sHeight = surfaceHeightFacet.getWorld(pos.x(),pos.z());
             float noiseValue = noise.noise(pos.x(),pos.y(),pos.z());
 
-            if (checkSpawnPortal(pos, sHeight, noiseValue) && pos.x() < worldRegion.maxX() - 8 && pos.z() < worldRegion.maxY() - 8) {
+            if (checkSpawnPortal(pos, sHeight, noiseValue) && pos.x() < worldRegion.maxX() - 8 && pos.z() < worldRegion.maxY() - 8 && pos.x() > worldRegion.minX() + 8 && pos.z() > worldRegion.minY() + 8) {
                 facet.setWorld(pos.x(), (int)sHeight, pos.z(), new UnderworldPortal());
                 break;
             }
@@ -67,6 +67,6 @@ public class UnderworldPortalProvider implements FacetProviderPlugin {
     }
 
     public boolean checkSpawnPortal(Vector3i pos, float surfaceHeight, float noiseValue) {
-        return noiseValue > 0.9999 && pos.y() == Math.round(surfaceHeight);
+        return noiseValue > 0.9995 && pos.y() == Math.round(surfaceHeight);
     }
 }

@@ -33,7 +33,7 @@ public class UnderworldWorldRasterizer implements WorldRasterizerPlugin {
 
     @Override
     public void initialize() {
-        ground = CoreRegistry.get(BlockManager.class).getBlock("Underworld:Basalt");
+        ground = CoreRegistry.get(BlockManager.class).getBlock("Underworld:HeatedBasalt");
         lava = CoreRegistry.get(BlockManager.class).getBlock("Core:Lava");
     }
 
