@@ -1,5 +1,5 @@
 {
-    "basedOn": "core:rock2",
+    "basedOn": "CoreAssets:rock2",
     "hardness": 4,
     "translucent": true,
     "luminance": 15,

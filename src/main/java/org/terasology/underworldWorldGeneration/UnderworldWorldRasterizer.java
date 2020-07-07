@@ -34,7 +34,7 @@ public class UnderworldWorldRasterizer implements WorldRasterizerPlugin {
     @Override
     public void initialize() {
         ground = CoreRegistry.get(BlockManager.class).getBlock("Underworld:HeatedBasalt");
-        lava = CoreRegistry.get(BlockManager.class).getBlock("Core:Lava");
+        lava = CoreRegistry.get(BlockManager.class).getBlock("CoreAssets:Lava");
     }
 
     @Override
@@ -52,10 +52,10 @@ public class UnderworldWorldRasterizer implements WorldRasterizerPlugin {
             float centerHeight = ceilingHeight - 25;
 
             if (Math.abs(centerHeight - position.y) >= surfaceOffset) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), ground);
+                chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), ground);
 
             } else if (position.y <= centerHeight - 15) {
-                chunk.setBlock(ChunkMath.calcBlockPos(position), lava);
+                chunk.setBlock(ChunkMath.calcRelativeBlockPos(position), lava);
             }
         }
     }
