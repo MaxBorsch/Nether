@@ -20,7 +20,7 @@ import org.terasology.math.TeraMath;
 import org.terasology.math.geom.BaseVector2i;
 import org.terasology.math.geom.Rect2i;
 import org.terasology.math.geom.Vector2f;
-import org.terasology.rendering.nui.properties.Range;
+import org.terasology.nui.properties.Range;
 import org.terasology.utilities.procedural.BrownianNoise;
 import org.terasology.utilities.procedural.Noise;
 import org.terasology.utilities.procedural.PerlinNoise;
@@ -63,25 +63,21 @@ public class MountainsProvider implements FacetProviderPlugin, ConfigurableFacet
     }
 
     @Override
-    public String getConfigurationName()
-    {
+    public String getConfigurationName() {
         return "Mountains";
     }
 
     @Override
-    public Component getConfiguration()
-    {
+    public Component getConfiguration() {
         return configuration;
     }
 
     @Override
-    public void setConfiguration(Component configuration)
-    {
-        this.configuration = (MountainsConfiguration)configuration;
+    public void setConfiguration(Component configuration) {
+        this.configuration = (MountainsConfiguration) configuration;
     }
 
-    private static class MountainsConfiguration implements Component
-    {
+    private static class MountainsConfiguration implements Component {
         @Range(min = 100, max = 200f, increment = 25f, precision = 1, description = "Underworld Mountain Height")
         private float mountainHeight = 150f;
     }
